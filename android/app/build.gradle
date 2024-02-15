@@ -24,8 +24,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.ssh.flutter_movify"
-    compileSdkVersion flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    ndkVersion "25.1.8937393"
+    compileSdkVersion 31
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
