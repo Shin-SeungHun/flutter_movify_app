@@ -17,9 +17,9 @@ class MovieApi {
     }
   }
 
-  getMovieInfoResult(int page) async {
+  getMovieInfoResult({required String query, required int page}) async {
     final response = await http
-        .get(Uri.parse('https://api.themoviedb.org/3/movie/popular?api_key=$_apiKey&language=ko-KR&page=$page'));
+        .get(Uri.parse('https://api.themoviedb.org/3/movie/$query?api_key=$_apiKey&language=ko-KR&page=$page'));
     return MovieDto.fromJson(jsonDecode(response.body));
   }
 }
