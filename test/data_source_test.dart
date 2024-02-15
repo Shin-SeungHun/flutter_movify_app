@@ -6,7 +6,7 @@ void main(){
 
     final MovieApi api = MovieApi();
     await api.init();
-    MovieDto dto = await api.getMovieInfoResult(1);
+    MovieDto dto = await api.getMovieInfoResult(query: 'popular',page: 1);
 
     expect(dto.results?.map((e) => e.id), isNotNull);
     return null;
