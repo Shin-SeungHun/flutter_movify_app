@@ -6,16 +6,24 @@ import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
 class HomeViewModel extends ChangeNotifier {
   final MovieRepositoryImpl repository = MovieRepositoryImpl();
 
-  List<MovieItem> movieItemList = [];
+  List<MovieItem> popMovieList = [];
+  List<MovieItem> topMovieList = [];
   int page = 1;
 
   HomeViewModel() {
-    fetchMovieInfo(query: GenreEnums.pop.genre, page: page);
+    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: page);
+    fetchTopMovieInfo(query: GenreEnums.top.genre, page: page);
   }
 
-  fetchMovieInfo({required String query, required int page}) async {
+  fetchPopMovieInfo({required String query, required int page}) async {
     notifyListeners();
-    movieItemList = await repository.getMovieItems(query: query, page: page);
+    popMovieList = await repository.getMovieItems(query: query, page: page);
+    notifyListeners();
+  }
+
+  fetchTopMovieInfo({required String query, required int page}) async {
+    notifyListeners();
+    topMovieList = await repository.getMovieItems(query: query, page: page);
     notifyListeners();
   }
 }
