@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/data/model/movie_item.dart';
+import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
 import 'package:flutter_movify/ui/home/home_view_model.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
-import 'package:flutter_movify/ui/layout/image_widget.dart';
+import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,18 +14,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
     super.initState();
+    _tabController = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -60,55 +58,23 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               TabBarView(
                 controller: _tabController,
                 children: [
-                  Scrollbar(
-                    controller: _scrollController,
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        viewModel.popMovieList;
-                      },
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: viewModel.popMovieList.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 1 개의 행에 보여줄 item 개수
-                          childAspectRatio: 0.7, // item 의 가로 세로의 비율
-                          mainAxisSpacing: 0, // 수평 Padding
-                          crossAxisSpacing: 0, // 수직 Padding
-                        ),
-                        itemBuilder: (context, index) {
-                          final MovieItem movieItem = viewModel.popMovieList[index];
-                          return Container(
-                            margin: const EdgeInsets.all(8.0),
-                            child: ImageWidget(movieItem: movieItem),
-                          );
-                        },
-                      ),
-                    ),
+                  // _buildMovieList(viewModel.popMovieList, viewModel.popScrollController),
+                  // _buildMovieList(viewModel.topMovieList, viewModel.topScrollController),
+                  MovieGridView(
+                    scrollController: viewModel.popScrollController,
+                    movieList: viewModel.popMovieList,
+                    onRefresh: () async {
+                      await viewModel.fetchPopMovieInfo(query: GenreEnums.pop.genre, page: 1);
+                    },
+                    genre: GenreEnums.pop.genre,
                   ),
-                  Scrollbar(
-                    controller: _scrollController,
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        viewModel.topMovieList;
-                      },
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        itemCount: viewModel.topMovieList.length,
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2, // 1 개의 행에 보여줄 item 개수
-                          childAspectRatio: 0.7, // item 의 가로 세로의 비율
-                          mainAxisSpacing: 0, // 수평 Padding
-                          crossAxisSpacing: 0, // 수직 Padding
-                        ),
-                        itemBuilder: (context, index) {
-                          final MovieItem movieItem = viewModel.topMovieList[index];
-                          return Container(
-                            margin: const EdgeInsets.all(8.0),
-                            child: ImageWidget(movieItem: movieItem),
-                          );
-                        },
-                      ),
-                    ),
+                  MovieGridView(
+                    scrollController: viewModel.topScrollController,
+                    movieList: viewModel.topMovieList,
+                    onRefresh: () async {
+                      await viewModel.fetchTopMovieInfo(query: GenreEnums.top.genre, page: 1);
+                    },
+                    genre: GenreEnums.top.genre,
                   ),
                 ],
               ),
