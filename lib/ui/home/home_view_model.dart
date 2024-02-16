@@ -4,18 +4,74 @@ import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
 
 class HomeViewModel extends ChangeNotifier {
-  final MovieRepositoryImpl repository = MovieRepositoryImpl();
+  final MovieRepositoryImpl _repository = MovieRepositoryImpl();
 
-  List<MovieItem> movieItemList = [];
-  int page = 1;
+  List<MovieItem> popMovieList = [];
+  List<MovieItem> topMovieList = [];
+  final ScrollController _popScrollController = ScrollController();
+  final ScrollController _topScrollController = ScrollController();
+  int _popPage = 1;
+  int _topPage = 1;
 
-  HomeViewModel() {
-    fetchMovieInfo(query: GenreEnums.pop.genre, page: page);
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  ScrollController get popScrollController => _popScrollController;
+
+  ScrollController get topScrollController => _topScrollController;
+
+  @override
+  void dispose() {
+    _popScrollController.dispose();
+    _topScrollController.dispose();
+    super.dispose();
   }
 
-  fetchMovieInfo({required String query, required int page}) async {
+  HomeViewModel() {
+    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: _popPage);
+    fetchTopMovieInfo(query: GenreEnums.top.genre, page: _topPage);
+
+    _popScrollController.addListener(() {
+      if (_popScrollController.position.pixels == _popScrollController.position.maxScrollExtent) {
+        fetchMorePopMovies();
+      }
+    });
+
+    _topScrollController.addListener(() {
+      if (_topScrollController.position.pixels == _topScrollController.position.maxScrollExtent) {
+        fetchMoreTopMovies();
+      }
+    });
+  }
+
+  fetchPopMovieInfo({required String query, required int page}) async {
+    popMovieList = await _repository.getMovieItems(query: query, page: page);
     notifyListeners();
-    movieItemList = await repository.getMovieItems(query: query, page: page);
+  }
+
+  fetchTopMovieInfo({required String query, required int page}) async {
+    topMovieList = await _repository.getMovieItems(query: query, page: page);
+    notifyListeners();
+  }
+
+  void fetchMorePopMovies() async {
+    _isLoading = true; // 로딩 시작
+    notifyListeners();
+    _popPage++;
+    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
+    popMovieList.addAll(newMovies);
+    _isLoading = false; // 로딩 완료
+    notifyListeners();
+  }
+
+  void fetchMoreTopMovies() async {
+    _isLoading = true; // 로딩 시작
+    notifyListeners();
+    _topPage++;
+    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
+    topMovieList.addAll(newMovies);
+    _isLoading = false; // 로딩 완료
     notifyListeners();
   }
 }
