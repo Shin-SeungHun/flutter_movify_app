@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
-import 'package:flutter_movify/ui/layout/image_widget.dart';
+import 'package:flutter_movify/ui/layout/movie_poster_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class MovieGridView extends StatelessWidget {
@@ -38,7 +38,7 @@ class MovieGridView extends StatelessWidget {
             },
             child: Container(
               margin: const EdgeInsets.all(8.0),
-              child: ImageWidget(movieItem: movieItem),
+              child: MoviePosterWidget(movieItem: movieItem),
             ),
           );
         },

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
 
-class ImageWidget extends StatelessWidget {
-  const ImageWidget({
+class MovieBackDropWidget extends StatelessWidget {
+  const MovieBackDropWidget({
     super.key,
     required this.movieItem,
   });
@@ -12,10 +12,10 @@ class ImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(16.0),
+
       child: Image.network(
-        'https://image.tmdb.org/t/p/w500${movieItem.posterPath}',
-        fit: BoxFit.fitHeight,
+        'https://image.tmdb.org/t/p/w500${movieItem.backDropPath}',
+        fit: BoxFit.cover,
         width: double.infinity,
       ),
     );
