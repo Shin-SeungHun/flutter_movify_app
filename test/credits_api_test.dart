@@ -1,7 +1,6 @@
 import 'package:flutter_movify/data/data_source/credits_api.dart';
 import 'package:flutter_movify/data/dto/credits_dto.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_movify/data/dto/movie_dto.dart';
 void main(){
   test('api test', () async{
 
