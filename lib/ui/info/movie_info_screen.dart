@@ -1,9 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_movify/data/model/cast_item.dart';
 import 'package:flutter_movify/ui/info/movie_info_view_model.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
+import 'package:flutter_movify/ui/layout/credits_profile_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_back_drop_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_info_poster_widget.dart';
+import 'package:flutter_movify/ui/layout/movie_poster_dialog.dart';
 import 'package:provider/provider.dart';
 
 class MovieInfoScreen extends StatefulWidget {
@@ -19,15 +23,6 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
     return Consumer<MovieInfoViewModel>(
       builder: (BuildContext context, MovieInfoViewModel viewModel, Widget? child) {
         return Scaffold(
-          // appBar: AppBar(
-          //   title: Text(viewModel.movieItem.title.toString()),
-          // ),
-          // body: Container(
-          //   child: Hero(
-          //     tag: viewModel.movieItem.id,
-          //     child: ImageWidget(movieItem: viewModel.movieItem),
-          //   ),
-          // ),
           body: Stack(children: [
             const BackgroundWidget(),
             CustomScrollView(
@@ -40,11 +35,11 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
                       double top = constraints.biggest.height;
                       return FlexibleSpaceBar(
                         title: AnimatedOpacity(
-                          duration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
                           opacity: top < kToolbarHeight * 2.2 ? 1.0 : 0.0,
                           child: Text(
                             viewModel.movieItem.title,
-                            style: TextStyle(color: CupertinoColors.systemYellow, fontWeight: FontWeight.bold),
+                            style: const TextStyle(color: CupertinoColors.systemYellow, fontWeight: FontWeight.bold),
                           ),
                         ),
                         background: MovieBackDropWidget(movieItem: viewModel.movieItem),
@@ -58,15 +53,77 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
                 SliverList(
                   delegate: SliverChildListDelegate(
                     [
-                      SizedBox(height: 30),
-                      MovieInfoPosterWidget(movieItem: viewModel.movieItem),
+                      const SizedBox(height: 20),
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => MoviePosterDialog(
+                                        movieItem: viewModel.movieItem,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: MovieInfoPosterWidget(movieItem: viewModel.movieItem),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       ListTile(
                         title: Text(
                           viewModel.movieItem.title,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
                         ),
                       ),
-                      ListTile(title: Text(viewModel.movieItem.overview)),
+                      ListTile(
+                        title: Text(viewModel.movieItem.overview),
+                      ),
+                      const SizedBox(height: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            child: Text(
+                              '주요 출연진',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 250, // 가로 스크롤 가능한 영역을 제한하기 위한 높이 설정
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: viewModel.castList.length,
+                              itemBuilder: (context, index) {
+                                final CastItem castItem = viewModel.castList[index];
+                                return Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: CreditsProfileWidget(castItem: castItem),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

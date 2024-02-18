@@ -12,11 +12,12 @@ class MovieInfoPosterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(30.0),
+      borderRadius: BorderRadius.circular(16.0),
       child: Image.network(
         'https://image.tmdb.org/t/p/w500${movieItem.posterPath}',
-        fit: BoxFit.fitHeight,
-        width: double.infinity,
+        fit: BoxFit.cover,
+        width: 160,
+        height: 230,
       ),
     );
   }
