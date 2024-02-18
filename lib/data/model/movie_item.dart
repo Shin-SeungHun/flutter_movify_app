@@ -1,19 +1,20 @@
 import 'package:json_annotation/json_annotation.dart';
 
 class MovieItem {
+  @JsonKey(name: 'id')
   final num id;
+  @JsonKey(name: 'title')
   final String title;
   @JsonKey(name: 'original_title')
   final String originalTitle;
   @JsonKey(name: 'poster_path')
   final String posterPath;
-
+  @JsonKey(name: 'overview')
   final String overview;
   @JsonKey(name: 'backDrop_path')
   final String backDropPath;
   @JsonKey(name: 'release_date')
   final String releaseDate;
-
   @JsonKey(name: 'vote_average')
   final num voteAverage;
 
