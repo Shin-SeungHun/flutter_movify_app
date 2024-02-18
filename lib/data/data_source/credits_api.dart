@@ -17,7 +17,7 @@ class CreditsApi{
     }
   }
 
-  getCreditsInfoResult({required int id}) async {
+  getCreditsInfoResult({required num id}) async {
     final response = await http
         .get(Uri.parse('https://api.themoviedb.org/3/movie/$id/credits?api_key=$_apiKey&language=ko-KR'));
     return CreditsDto.fromJson(jsonDecode(response.body));

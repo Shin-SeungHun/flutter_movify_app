@@ -8,7 +8,7 @@ class CreditsRepositoryImpl implements CreditsRepository {
   final CreditsApi _api = CreditsApi();
 
   @override
-  Future<List<CastItem>> getCastItems({required int id}) async {
+  Future<List<CastItem>> getCastItems({required num id}) async {
     await _api.init();
     final CreditsDto dto = await _api.getCreditsInfoResult(id: id);
     return dto.cast!.map((e) => e.toCastItem()).toList();
