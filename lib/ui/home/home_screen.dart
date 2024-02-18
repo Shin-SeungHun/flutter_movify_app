@@ -58,8 +58,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
               TabBarView(
                 controller: _tabController,
                 children: [
-                  // _buildMovieList(viewModel.popMovieList, viewModel.popScrollController),
-                  // _buildMovieList(viewModel.topMovieList, viewModel.topScrollController),
                   MovieGridView(
                     scrollController: viewModel.popScrollController,
                     movieList: viewModel.popMovieList,
