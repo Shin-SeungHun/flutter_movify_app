@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 class OttItem {
-트  @JsonKey(name: 'logo_path')
+  @JsonKey(name: 'logo_path')
   String logoPath;
 
   @JsonKey(name: 'provider_id')
