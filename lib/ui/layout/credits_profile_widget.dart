@@ -16,17 +16,14 @@ class CreditsProfileWidget extends StatelessWidget {
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(16.0),
-          child: Image.network(
-            'https://image.tmdb.org/t/p/w500${castItem.profilePath}',
-            fit: BoxFit.cover,
-            width: 130,
-            height: 180,
-          ),
+          child: _buildProfileImage(),
         ),
         const SizedBox(height: 5), // 이미지와 텍스트 간격 조절을 위한 SizedBox 추가
         Text(
           castItem.name,
           textAlign: TextAlign.left,
+          maxLines: 2, // 최대 라인 수를 2로 설정
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -35,6 +32,8 @@ class CreditsProfileWidget extends StatelessWidget {
         Text(
           castItem.character,
           textAlign: TextAlign.left,
+          maxLines: 2, // 최대 라인 수를 2로 설정
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
@@ -42,5 +41,24 @@ class CreditsProfileWidget extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Widget _buildProfileImage() {
+    if (castItem.profilePath.isNotEmpty) {
+      return Image.network(
+        'https://image.tmdb.org/t/p/w500${castItem.profilePath}',
+        fit: BoxFit.cover,
+        width: 130,
+        height: 180,
+      );
+    } else {
+      // profilePath가 없을 때 대체할 이미지
+      return Image.asset(
+        'assets/images/no_image_person.jpg',
+        fit: BoxFit.cover,
+        width: 130,
+        height: 180,
+      );
+    }
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_movify/ui/home/home_screen.dart';
 import 'package:flutter_movify/ui/home/home_view_model.dart';
 import 'package:flutter_movify/ui/info/movie_info_screen.dart';
 import 'package:flutter_movify/ui/info/movie_info_view_model.dart';
+import 'package:flutter_movify/ui/search/search_screen.dart';
+import 'package:flutter_movify/ui/search/search_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -22,6 +24,14 @@ final router = GoRouter(initialLocation: '/', routes: [
         return ChangeNotifierProvider<MovieInfoViewModel>(
           create: (context) => MovieInfoViewModel(movieItem: movieItem),
           child: const MovieInfoScreen(),
+        );
+      }),
+  GoRoute(
+      path: '/search',
+      builder: (context, state) {
+        return ChangeNotifierProvider<SearchViewModel>(
+          create:(context)=> SearchViewModel(),
+          child: const SearchScreen(),
         );
       }),
 ]);

@@ -14,4 +14,11 @@ class MovieRepositoryImpl implements MovieRepository {
 
     return dto.results!.map((e) => e.toMovieItem()).toList();
   }
+
+  @override
+  Future<List<MovieItem>> searchMovieItems({required String query}) async {
+    await _api.init();
+    final MovieDto dto = await _api.searchMovieInfoResult(query: query);
+    return dto.results!.map((e) => e.toMovieItem()).toList();
+  }
 }

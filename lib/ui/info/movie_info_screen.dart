@@ -9,6 +9,7 @@ import 'package:flutter_movify/ui/layout/movie_back_drop_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_info_poster_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_poster_dialog.dart';
 import 'package:flutter_movify/ui/layout/ott_list_widget.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -65,13 +66,15 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
                             children: [
                               GestureDetector(
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => MoviePosterDialog(
-                                        movieItem: viewModel.movieItem,
+                                  if (viewModel.movieItem.posterPath.isNotEmpty) {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => MoviePosterDialog(
+                                          movieItem: viewModel.movieItem,
+                                        ),
                                       ),
-                                    ),
-                                  );
+                                    );
+                                  }
                                 },
                                 child: MovieInfoPosterWidget(movieItem: viewModel.movieItem),
                               ),
@@ -87,7 +90,52 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
                             fontSize: 20,
                           ),
                         ),
+                        subtitle: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '평점: ${viewModel.movieItem.voteAverage.toString()}/10',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                              ),
+                            ),
+                            RatingBar.builder(
+                              initialRating: viewModel.movieItem.voteAverage / 2,
+                              minRating: 0,
+                              direction: Axis.horizontal,
+                              allowHalfRating: true,
+                              itemCount: 5,
+                              itemSize: 20,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              onRatingUpdate: (rating) {
+                                // 별점 업데이트 처리
+                              },
+                            ),
+                          ],
+                        ),
                       ),
+                      // RatingBar.builder(
+                      //   initialRating: viewModel.movieItem.voteAverage / 2,
+                      //   // 초기 별점 설정
+                      //   minRating: 0,
+                      //   direction: Axis.horizontal,
+                      //   allowHalfRating: true,
+                      //   // 반 별점 허용 여부
+                      //   itemCount: 5,
+                      //   // 별점 아이템 개수
+                      //   itemSize: 20,
+                      //   // 별점 크기
+                      //   itemBuilder: (context, _) =>
+                      //   const Icon(
+                      //     Icons.star,
+                      //     color: Colors.amber,
+                      //   ),
+                      //   onRatingUpdate: (rating) {},
+                      // ),
                       ListTile(
                         title: Text(viewModel.movieItem.overview),
                       ),
@@ -127,45 +175,48 @@ class _MovieInfoScreenState extends State<MovieInfoScreen> {
                         ],
                       ),
                       const SizedBox(height: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            child: Text(
-                              'OTT',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20,
+                      Visibility(
+                        visible: viewModel.ottList.isNotEmpty,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                              child: Text(
+                                'OTT',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 100, // 가로 스크롤 가능한 영역을 제한하기 위한 높이 설정
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: viewModel.ottList.length,
-                              itemBuilder: (context, index) {
-                                final OttItem ottItem = viewModel.ottList[index];
-                                return Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: GestureDetector(
-                                          onTap: () {
-                                            int ottId = ottItem.providerId;
-                                            String packageName = ottPackage()[ottId]!;
-                                            openGooglePlayStore(packageName: packageName);
-                                          },
-                                          child: OttListWidget(ottItem: ottItem)),
-                                    ),
-                                  ],
-                                );
-                              },
+                            SizedBox(
+                              height: 100, // 가로 스크롤 가능한 영역을 제한하기 위한 높이 설정
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: viewModel.ottList.length,
+                                itemBuilder: (context, index) {
+                                  final OttItem ottItem = viewModel.ottList[index];
+                                  return Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              int ottId = ottItem.providerId;
+                                              String packageName = ottPackage()[ottId]!;
+                                              openGooglePlayStore(packageName: packageName);
+                                            },
+                                            child: OttListWidget(ottItem: ottItem)),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),

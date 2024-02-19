@@ -56,22 +56,31 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   void fetchMorePopMovies() async {
-    _isLoading = true; // 로딩 시작
-    notifyListeners();
+    // _isLoading = true; // 로딩 시작
+    // notifyListeners();
     _popPage++;
     List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
-    popMovieList.addAll(newMovies);
-    _isLoading = false; // 로딩 완료
+
+    // 중복된 아이템 필터링
+    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !popMovieList.contains(newMovie)).toList();
+
+    print(newMovies.map((e) => e.title.toString()));
+    popMovieList.addAll(filteredNewMovies);
+    // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
 
   void fetchMoreTopMovies() async {
-    _isLoading = true; // 로딩 시작
-    notifyListeners();
+    // _isLoading = true; // 로딩 시작
+    // notifyListeners();
     _topPage++;
     List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
-    topMovieList.addAll(newMovies);
-    _isLoading = false; // 로딩 완료
+
+    // 중복된 아이템 필터링
+    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !topMovieList.contains(newMovie)).toList();
+
+    topMovieList.addAll(filteredNewMovies);
+    // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
 }
