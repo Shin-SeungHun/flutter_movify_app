@@ -22,6 +22,8 @@ class CreditsProfileWidget extends StatelessWidget {
         Text(
           castItem.name,
           textAlign: TextAlign.left,
+          maxLines: 2, // 최대 라인 수를 2로 설정
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
@@ -30,6 +32,8 @@ class CreditsProfileWidget extends StatelessWidget {
         Text(
           castItem.character,
           textAlign: TextAlign.left,
+          maxLines: 2, // 최대 라인 수를 2로 설정
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 14,
             color: Colors.grey,
