@@ -13,12 +13,26 @@ class MovieInfoPosterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.0),
-      child: Image.network(
+      child: _buildPosterImage(),
+    );
+  }
+
+  Widget _buildPosterImage() {
+    if (movieItem.posterPath.isNotEmpty) {
+      return Image.network(
         'https://image.tmdb.org/t/p/w500${movieItem.posterPath}',
         fit: BoxFit.cover,
-        width: 160,
-        height: 230,
-      ),
-    );
+        width: 130,
+        height: 180,
+      );
+    } else {
+      // posterPath가 없을 때 대체할 이미지
+      return Image.asset(
+        'assets/images/no_poster_image.png',
+        fit: BoxFit.cover,
+        width: 130,
+        height: 180,
+      );
+    }
   }
 }
