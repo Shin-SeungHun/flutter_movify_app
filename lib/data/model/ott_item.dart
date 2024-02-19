@@ -1,16 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 class OttItem {
-  ///  @SerializedName("provider_id")
-//     private int provider_id;
-//     @SerializedName("logo_path")
-//     private String logo_path;
-//     @SerializedName("provider_name")
-//     private String provider_name;
-//     @SerializedName("display_priority")
-//     private int display_priority;
-
-  @JsonKey(name: 'logo_path')
+트  @JsonKey(name: 'logo_path')
   String logoPath;
 
   @JsonKey(name: 'provider_id')
