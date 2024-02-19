@@ -42,6 +42,7 @@ dependencies:
   env_flutter: ^0.1.4
   rive: ^0.12.4
   json_annotation: ^4.8.1
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
