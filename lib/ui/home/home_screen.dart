@@ -5,6 +5,7 @@ import 'package:flutter_movify/ui/layout/background_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:rive/rive.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -34,6 +35,17 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
       builder: (context, viewModel, child) {
         return Scaffold(
           appBar: AppBar(
+            leading: const Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                  child: RiveAnimation.asset(
+                    'assets/rive/cat.riv',
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ],
+            ),
             title: const Text('Movie Finder'),
             actions: [
               IconButton(
@@ -49,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             ],
             bottom: TabBar(
               controller: _tabController,
+              indicatorSize: TabBarIndicatorSize.tab,
               tabs: const [
                 Tab(text: '인기순'),
                 Tab(text: '평점순'),
