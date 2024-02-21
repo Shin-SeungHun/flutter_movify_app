@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/router/routes.dart';
+import 'package:flutter_movify/router/app_router.dart';
 
 void main() {
+  /// 라우터 초기화
+  AppRouter.instance;
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routerConfig: router,
+      routerConfig: AppRouter.router,
       debugShowCheckedModeBanner: false,
       title: 'Movie Finder',
       darkTheme: ThemeData(
