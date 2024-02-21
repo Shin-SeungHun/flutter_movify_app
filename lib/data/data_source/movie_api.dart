@@ -18,14 +18,20 @@ class MovieApi {
   }
 
   getMovieInfoResult({required String query, required int page}) async {
-    final response = await http
-        .get(Uri.parse('https://api.themoviedb.org/3/movie/$query?api_key=$_apiKey&language=ko-KR&page=$page'));
+    final response = await http.get(
+        Uri.parse('https://api.themoviedb.org/3/movie/$query?api_key=$_apiKey&language=ko-KR&page=$page&region=KR'));
     return MovieDto.fromJson(jsonDecode(response.body));
   }
 
   searchMovieInfoResult({required String query}) async {
+    final response = await http.get(
+        Uri.parse('https://api.themoviedb.org/3/search/movie?api_key=$_apiKey&query=$query&language=ko-KR&page=1'));
+    return MovieDto.fromJson(jsonDecode(response.body));
+  }
+
+  getOttMovieInfoResult({required int page, required int watchProvider}) async {
     final response = await http.get(Uri.parse(
-        'https://api.themoviedb.org/3/search/movie?api_key=$_apiKey&query=$query&language=ko-KR&page=1'));
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&language=ko-KR&page=$page&sort_by=popularity.desc&watch_region=KR&with_watch_providers=$watchProvider'));
     return MovieDto.fromJson(jsonDecode(response.body));
   }
 }
