@@ -80,7 +80,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     onRefresh: () async {
                       await viewModel.fetchPopMovieInfo(query: GenreEnums.pop.genre, page: 1);
                     },
-                    genre: GenreEnums.pop.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.topScrollController,
@@ -88,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     onRefresh: () async {
                       await viewModel.fetchTopMovieInfo(query: GenreEnums.top.genre, page: 1);
                     },
-                    genre: GenreEnums.top.genre,
                   ),
                 ],
               ),

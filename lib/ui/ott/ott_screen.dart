@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
 import 'package:flutter_movify/common/utils/enum/watch_provider_enums.dart';
-import 'package:flutter_movify/ui/home/home_view_model.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
 import 'package:flutter_movify/ui/ott/ott_view_model.dart';
@@ -85,7 +83,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchNetflixMovieInfo(
                           watchProvider: WatchProviderEnums.netflix.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.watchaScrollController,
@@ -94,7 +91,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchWatchaMovieInfo(
                           watchProvider: WatchProviderEnums.watcha.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.disneyScrollController,
@@ -103,7 +99,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchWatchaMovieInfo(
                           watchProvider: WatchProviderEnums.disney.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.wavveScrollController,
@@ -112,7 +107,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchWatchaMovieInfo(
                           watchProvider: WatchProviderEnums.wavve.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.amazonScrollController,
@@ -121,7 +115,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchWatchaMovieInfo(
                           watchProvider: WatchProviderEnums.amazon.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                   MovieGridView(
                     scrollController: viewModel.appleScrollController,
@@ -130,7 +123,6 @@ class _OttScreenState extends State<OttScreen> with SingleTickerProviderStateMix
                       await viewModel.fetchWatchaMovieInfo(
                           watchProvider: WatchProviderEnums.apple.watchProvider, page: 1);
                     },
-                    genre: GenreEnums.ott.genre,
                   ),
                 ],
               ),

@@ -7,14 +7,12 @@ class MovieGridView extends StatelessWidget {
   final ScrollController scrollController;
   final List<MovieItem> movieList;
   final Future<void> Function() onRefresh;
-  final String genre;
 
   const MovieGridView({
     Key? key,
     required this.scrollController,
     required this.movieList,
     required this.onRefresh,
-    required this.genre,
   }) : super(key: key);
 
   @override
