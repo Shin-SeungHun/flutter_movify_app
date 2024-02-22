@@ -28,4 +28,11 @@ class MovieRepositoryImpl implements MovieRepository {
     final MovieDto dto = await _api.getOttMovieInfoResult(page: page, watchProvider: watchProvider);
     return dto.results!.map((e) => e.toMovieItem()).toList();
   }
+
+  @override
+  Future<List<MovieItem>> getGenreMovieItems({required int page, required int genre}) async {
+    await _api.init();
+    final MovieDto dto = await _api.getGenreMovieInfoResult(page: page, genre: genre);
+    return dto.results!.map((e) => e.toMovieItem()).toList();
+  }
 }

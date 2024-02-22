@@ -4,5 +4,6 @@ abstract interface class MovieRepository {
   Future<List<MovieItem>> getMovieItems({required String query, required int page});
   Future<List<MovieItem>> searchMovieItems({required String query});
   Future<List<MovieItem>> getOttMovieItems({required int page, required int watchProvider});
+  Future<List<MovieItem>> getGenreMovieItems({required int page, required int genre});
 
 }
