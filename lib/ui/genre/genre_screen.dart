@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/ui/genre/genre_view_model.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
-import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
+import 'package:flutter_movify/ui/layout/movie_poster_widget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:rive/rive.dart';
@@ -59,39 +60,38 @@ class _GenreScreenState extends State<GenreScreen> with SingleTickerProviderStat
                 icon: const Icon(Icons.search),
               ),
             ],
-            bottom: TabBar(
-              controller: _tabController,
-              tabs: const [
-                Tab(text: '인기순'),
-                Tab(text: '평점순'),
-              ],
-            ),
           ),
           body: Stack(
             children: [
               const BackgroundWidget(),
-              TabBarView(
-                controller: _tabController,
-                children: [
-                  MovieGridView(
-                    scrollController: viewModel.popScrollController,
-                    movieList: viewModel.popMovieList,
-                    onRefresh: () async {
-                      await viewModel.fetchPopMovieInfo(query: GenreEnums.pop.genre, page: 1);
+              // ListView.builder(
+              //   itemCount: GenreEnums.values.length,
+              //   itemBuilder: (context, index) {
+                   ListView.builder(
+                    controller: viewModel.actionScrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: viewModel.actionList.length,
+                    itemBuilder: (context, index) {
+                      final MovieItem movieItem = viewModel.actionList[index];
+                      return GestureDetector(
+                        onTap: () {
+                          context.push('/movieInfo', extra: movieItem);
+                        },
+                        child: Container(
+                          width: 160,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              MoviePosterWidget(movieItem: movieItem),
+                            ],
+                          ),
+                        ),
+                      );
                     },
-                    genre: GenreEnums.pop.genre,
                   ),
-                  MovieGridView(
-                    scrollController: viewModel.topScrollController,
-                    movieList: viewModel.topMovieList,
-                    onRefresh: () async {
-                      await viewModel.fetchTopMovieInfo(query: GenreEnums.top.genre, page: 1);
-                    },
-                    genre: GenreEnums.top.genre,
-                  ),
-                ],
-              ),
-            ],
+                                    // );
+                                  // },
+                                ],
           ),
         );
       },

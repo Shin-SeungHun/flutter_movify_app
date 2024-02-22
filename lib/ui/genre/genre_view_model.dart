@@ -1,85 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/common/utils/enum/movie_enums.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
 
 class GenreViewModel extends ChangeNotifier {
   final MovieRepositoryImpl _repository = MovieRepositoryImpl();
 
-  List<MovieItem> popMovieList = [];
-  List<MovieItem> topMovieList = [];
-  final ScrollController _popScrollController = ScrollController();
-  final ScrollController _topScrollController = ScrollController();
-  int _popPage = 1;
-  int _topPage = 1;
+  List<MovieItem> actionList = [];
+  List<MovieItem> adventureList = [];
+  List<MovieItem> animationList = [];
+  List<MovieItem> comedyList = [];
+  List<MovieItem> crimeList = [];
+  List<MovieItem> documentaryList = [];
+  List<MovieItem> dramaList = [];
+  List<MovieItem> familyList = [];
+  List<MovieItem> fantasyList = [];
+  List<MovieItem> historyList = [];
+  List<MovieItem> horrorList = [];
+  List<MovieItem> musicList = [];
+  List<MovieItem> mysteryList = [];
+  List<MovieItem> romanceList = [];
+  List<MovieItem> sfList = [];
+  List<MovieItem> tvMovieList = [];
+  List<MovieItem> thrillerList = [];
+  List<MovieItem> warList = [];
+  List<MovieItem> westernList = [];
+
+  final ScrollController _actionScrollController = ScrollController();
+  final ScrollController _adventureScrollController = ScrollController();
+  int _page = 1;
 
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
-  ScrollController get popScrollController => _popScrollController;
+  ScrollController get actionScrollController => _actionScrollController;
 
-  ScrollController get topScrollController => _topScrollController;
+  ScrollController get adventureScrollController => _adventureScrollController;
 
   @override
   void dispose() {
-    _popScrollController.dispose();
-    _topScrollController.dispose();
+    _actionScrollController.dispose();
+    _adventureScrollController.dispose();
     super.dispose();
   }
 
-  HomeViewModel() {
-    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: _popPage);
-    fetchTopMovieInfo(query: GenreEnums.top.genre, page: _topPage);
+  GenreViewModel() {
+    fetchPopMovieInfo(page: _page, genre: GenreEnums.action.genre);
 
-    _popScrollController.addListener(() {
-      if (_popScrollController.position.pixels == _popScrollController.position.maxScrollExtent) {
-        fetchMorePopMovies();
+    _actionScrollController.addListener(() {
+      if (_actionScrollController.position.pixels == _actionScrollController.position.maxScrollExtent) {
+        fetchMoreActionMovies();
       }
     });
 
-    _topScrollController.addListener(() {
-      if (_topScrollController.position.pixels == _topScrollController.position.maxScrollExtent) {
-        fetchMoreTopMovies();
+    _adventureScrollController.addListener(() {
+      if (_adventureScrollController.position.pixels == _adventureScrollController.position.maxScrollExtent) {
+        fetchMoreAdventureMovies();
       }
     });
   }
 
-  fetchPopMovieInfo({required String query, required int page}) async {
-    popMovieList = await _repository.getMovieItems(query: query, page: page);
+  fetchPopMovieInfo({required int page, required int genre}) async {
+    actionList = await _repository.getGenreMovieItems(page: page, genre: genre);
     notifyListeners();
   }
 
-  fetchTopMovieInfo({required String query, required int page}) async {
-    topMovieList = await _repository.getMovieItems(query: query, page: page);
+  fetchTopMovieInfo({required int page, required int genre}) async {
+    adventureList = await _repository.getGenreMovieItems(page: page, genre: genre);
     notifyListeners();
   }
 
-  void fetchMorePopMovies() async {
+  void fetchMoreActionMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _popPage++;
-    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
-
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getGenreMovieItems(page: _page, genre: GenreEnums.action.genre);
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !popMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !actionList.contains(newMovie));
 
-    print(newMovies.map((e) => e.title.toString()));
-    popMovieList.addAll(filteredNewMovies);
+    actionList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
 
-  void fetchMoreTopMovies() async {
+  void fetchMoreAdventureMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _topPage++;
-    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getGenreMovieItems(page: _page, genre: GenreEnums.adventure.genre);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !topMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !adventureList.contains(newMovie));
 
-    topMovieList.addAll(filteredNewMovies);
+    adventureList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
