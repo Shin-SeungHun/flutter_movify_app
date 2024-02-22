@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rive/rive.dart';
 
 class BottomNavigation extends StatefulWidget {
   // child는 StatefulNavigationShell 객체를 참조.
