@@ -3,7 +3,7 @@ enum GenreEnums {
   top,
   upComing,
   nowPlaying,
-  ott,
+
 }
 
 extension GenreEnumsExtension on GenreEnums {
@@ -17,8 +17,6 @@ extension GenreEnumsExtension on GenreEnums {
         return 'upcoming';
       case GenreEnums.nowPlaying:
         return 'now_playing';
-      case GenreEnums.ott:
-        return 'ott';
     }
   }
 }
