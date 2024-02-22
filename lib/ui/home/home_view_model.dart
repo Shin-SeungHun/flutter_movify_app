@@ -10,8 +10,7 @@ class HomeViewModel extends ChangeNotifier {
   List<MovieItem> topMovieList = [];
   final ScrollController _popScrollController = ScrollController();
   final ScrollController _topScrollController = ScrollController();
-  int _popPage = 1;
-  int _topPage = 1;
+  int _page = 1;
 
   bool _isLoading = false;
 
@@ -29,8 +28,8 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   HomeViewModel() {
-    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: _popPage);
-    fetchTopMovieInfo(query: GenreEnums.top.genre, page: _topPage);
+    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: _page);
+    fetchTopMovieInfo(query: GenreEnums.top.genre, page: _page);
 
     _popScrollController.addListener(() {
       if (_popScrollController.position.pixels == _popScrollController.position.maxScrollExtent) {
@@ -58,8 +57,8 @@ class HomeViewModel extends ChangeNotifier {
   void fetchMorePopMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _popPage++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !popMovieList.contains(newMovie));
@@ -72,8 +71,8 @@ class HomeViewModel extends ChangeNotifier {
   void fetchMoreTopMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _topPage++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !topMovieList.contains(newMovie));

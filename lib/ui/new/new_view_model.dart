@@ -10,8 +10,7 @@ class NewViewModel extends ChangeNotifier {
   List<MovieItem> upComingMovieList = [];
   final ScrollController _nowPlayingScrollController = ScrollController();
   final ScrollController _upComingScrollController = ScrollController();
-  int _nowPlayingPage = 1;
-  int _upComingPage = 1;
+  int _page = 1;
 
   bool _isLoading = false;
 
@@ -29,8 +28,8 @@ class NewViewModel extends ChangeNotifier {
   }
 
   NewViewModel() {
-    fetchNowPlayingMovieInfo(query: GenreEnums.nowPlaying.genre, page: _nowPlayingPage);
-    fetchUpComingMovieInfo(query: GenreEnums.upComing.genre, page: _upComingPage);
+    fetchNowPlayingMovieInfo(query: GenreEnums.nowPlaying.genre, page: _page);
+    fetchUpComingMovieInfo(query: GenreEnums.upComing.genre, page: _page);
 
     _nowPlayingScrollController.addListener(() {
       if (_nowPlayingScrollController.position.pixels == _nowPlayingScrollController.position.maxScrollExtent) {
@@ -58,8 +57,8 @@ class NewViewModel extends ChangeNotifier {
   void fetchMoreNowPlayingMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _nowPlayingPage++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.nowPlaying.genre, page: _nowPlayingPage);
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.nowPlaying.genre, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !nowPlayingMovieList.contains(newMovie));
@@ -72,8 +71,8 @@ class NewViewModel extends ChangeNotifier {
   void fetchMoreUpComingMovies() async {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
-    _upComingPage++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.upComing.genre, page: _upComingPage);
+    _page++;
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.upComing.genre, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !upComingMovieList.contains(newMovie));
