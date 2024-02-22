@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -33,13 +33,29 @@ class _SearchScreenState extends State<SearchScreen> {
               Flexible(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: SearchBar(
-                    controller: _textEditingController,
-                    onChanged: (query) {
-                      viewModel.searchImage(query);
-                    },
-                    hintText: '영화제목을 입력하세요',
-                    leading: const Icon(Icons.search),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(50.0, 0, 0, 0),
+                    child: SearchBar(
+                      controller: _textEditingController,
+                      onChanged: (query) {
+                        viewModel.searchImage(query);
+                      },
+                      hintText: '검색할 영화제목을 입력하세요',
+                      leading: const Icon(Icons.search),
+                      autoFocus: true,
+                      textInputAction: TextInputAction.done,
+                      trailing: [
+                        Visibility(
+                          visible: _textEditingController.text.isNotEmpty,
+                          child: GestureDetector(
+                              onTap: () {
+                                _textEditingController.clear();
+                                setState(() {});
+                              },
+                              child: const Icon(Icons.clear)),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),

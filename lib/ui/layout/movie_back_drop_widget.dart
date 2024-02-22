@@ -18,7 +18,7 @@ class MovieBackDropWidget extends StatelessWidget {
   }
 
   Widget _buildBackDropImage() {
-    if (movieItem.posterPath.isNotEmpty) {
+    if (movieItem.backDropPath.isNotEmpty) {
       return Image.network(
         'https://image.tmdb.org/t/p/w500${movieItem.backDropPath}',
         fit: BoxFit.cover,

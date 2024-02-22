@@ -18,7 +18,7 @@ class MoviePosterDialog extends StatelessWidget {
             tag: movieItem.id, // 위젯과 동일한 태그를 사용
             child: Image.network(
               'https://image.tmdb.org/t/p/w500${movieItem.posterPath}',
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width, // 화면 전체 너비
               height: MediaQuery.of(context).size.height, // 화면 전체 높이
             ),

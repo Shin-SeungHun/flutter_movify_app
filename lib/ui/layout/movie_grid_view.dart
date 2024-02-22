@@ -33,7 +33,7 @@ class MovieGridView extends StatelessWidget {
         itemBuilder: (context, index) {
           final MovieItem movieItem = movieList[index];
           return GestureDetector(
-            onTap: (){
+            onTap: () {
               context.push('/movieInfo', extra: movieItem);
             },
             child: Container(
