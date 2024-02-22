@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/common/utils/enum/movie_enums.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
 
@@ -28,8 +28,8 @@ class HomeViewModel extends ChangeNotifier {
   }
 
   HomeViewModel() {
-    fetchPopMovieInfo(query: GenreEnums.pop.genre, page: _page);
-    fetchTopMovieInfo(query: GenreEnums.top.genre, page: _page);
+    fetchPopMovieInfo(query: MovieEnums.pop.movie, page: _page);
+    fetchTopMovieInfo(query: MovieEnums.top.movie, page: _page);
 
     _popScrollController.addListener(() {
       if (_popScrollController.position.pixels == _popScrollController.position.maxScrollExtent) {
@@ -58,7 +58,7 @@ class HomeViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _page);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: MovieEnums.pop.movie, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !popMovieList.contains(newMovie));
@@ -72,7 +72,7 @@ class HomeViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _page);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: MovieEnums.top.movie, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !topMovieList.contains(newMovie));

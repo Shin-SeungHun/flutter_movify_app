@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/common/utils/enum/movie_enums.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
 
@@ -28,8 +28,8 @@ class NewViewModel extends ChangeNotifier {
   }
 
   NewViewModel() {
-    fetchNowPlayingMovieInfo(query: GenreEnums.nowPlaying.genre, page: _page);
-    fetchUpComingMovieInfo(query: GenreEnums.upComing.genre, page: _page);
+    fetchNowPlayingMovieInfo(query: MovieEnums.nowPlaying.movie, page: _page);
+    fetchUpComingMovieInfo(query: MovieEnums.upComing.movie, page: _page);
 
     _nowPlayingScrollController.addListener(() {
       if (_nowPlayingScrollController.position.pixels == _nowPlayingScrollController.position.maxScrollExtent) {
@@ -58,7 +58,7 @@ class NewViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.nowPlaying.genre, page: _page);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: MovieEnums.nowPlaying.movie, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !nowPlayingMovieList.contains(newMovie));
@@ -72,7 +72,7 @@ class NewViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.upComing.genre, page: _page);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: MovieEnums.upComing.movie, page: _page);
 
     // 중복된 아이템 필터링
     newMovieList.retainWhere((newMovie) => !upComingMovieList.contains(newMovie));

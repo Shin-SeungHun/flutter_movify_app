@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/common/utils/enum/movie_enums.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
 import 'package:flutter_movify/ui/new/new_view_model.dart';
@@ -78,14 +78,14 @@ class _NewScreenState extends State<NewScreen> with SingleTickerProviderStateMix
                     scrollController: viewModel.nowPlayingScrollController,
                     movieList: viewModel.nowPlayingMovieList,
                     onRefresh: () async {
-                      await viewModel.fetchNowPlayingMovieInfo(query: GenreEnums.nowPlaying.genre, page: 1);
+                      await viewModel.fetchNowPlayingMovieInfo(query: MovieEnums.nowPlaying.movie, page: 1);
                     },
                   ),
                   MovieGridView(
                     scrollController: viewModel.upComingScrollController,
                     movieList: viewModel.upComingMovieList,
                     onRefresh: () async {
-                      await viewModel.fetchUpComingMovieInfo(query: GenreEnums.upComing.genre, page: 1);
+                      await viewModel.fetchUpComingMovieInfo(query: MovieEnums.upComing.movie, page: 1);
                     },
                   ),
                 ],

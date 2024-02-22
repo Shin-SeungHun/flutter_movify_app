@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
+import 'package:flutter_movify/common/utils/enum/movie_enums.dart';
 import 'package:flutter_movify/ui/home/home_view_model.dart';
 import 'package:flutter_movify/ui/layout/background_widget.dart';
 import 'package:flutter_movify/ui/layout/movie_grid_view.dart';
@@ -78,14 +78,14 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
                     scrollController: viewModel.popScrollController,
                     movieList: viewModel.popMovieList,
                     onRefresh: () async {
-                      await viewModel.fetchPopMovieInfo(query: GenreEnums.pop.genre, page: 1);
+                      await viewModel.fetchPopMovieInfo(query: MovieEnums.pop.movie, page: 1);
                     },
                   ),
                   MovieGridView(
                     scrollController: viewModel.topScrollController,
                     movieList: viewModel.topMovieList,
                     onRefresh: () async {
-                      await viewModel.fetchTopMovieInfo(query: GenreEnums.top.genre, page: 1);
+                      await viewModel.fetchTopMovieInfo(query: MovieEnums.top.movie, page: 1);
                     },
                   ),
                 ],
