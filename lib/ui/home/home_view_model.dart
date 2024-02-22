@@ -59,13 +59,12 @@ class HomeViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _popPage++;
-    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.pop.genre, page: _popPage);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !popMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !popMovieList.contains(newMovie));
 
-    print(newMovies.map((e) => e.title.toString()));
-    popMovieList.addAll(filteredNewMovies);
+    popMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -74,12 +73,12 @@ class HomeViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _topPage++;
-    List<MovieItem> newMovies = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
+    List<MovieItem> newMovieList = await _repository.getMovieItems(query: GenreEnums.top.genre, page: _topPage);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !topMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !topMovieList.contains(newMovie));
 
-    topMovieList.addAll(filteredNewMovies);
+    topMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }

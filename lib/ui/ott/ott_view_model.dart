@@ -106,7 +106,6 @@ class OttViewModel extends ChangeNotifier {
 
   fetchWavveMovieInfo({required int page, required int watchProvider}) async {
     wavveMovieList = await _repository.getOttMovieItems(page: page, watchProvider: watchProvider);
-    print(wavveMovieList.map((e) => e.title.toString()));
     notifyListeners();
   }
 
@@ -124,14 +123,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.netflix.watchProvider);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !netflixMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !netflixMovieList.contains(newMovie));
 
-    print(newMovies.map((e) => e.title.toString()));
-    netflixMovieList.addAll(filteredNewMovies);
+    netflixMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -140,13 +138,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.watcha.watchProvider);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !watchaMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !watchaMovieList.contains(newMovie));
 
-    watchaMovieList.addAll(filteredNewMovies);
+    watchaMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -155,13 +153,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.disney.watchProvider);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !disneyMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !disneyMovieList.contains(newMovie));
 
-    disneyMovieList.addAll(filteredNewMovies);
+    disneyMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -170,15 +168,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.wavve.watchProvider);
 
     // 중복된 아이템 필터링
+    newMovieList.retainWhere((newMovie) => !wavveMovieList.contains(newMovie));
 
-    newMovies.retainWhere((newMovie) => !wavveMovieList.contains(newMovie));
-    print(newMovies.toString());
-
-    wavveMovieList.addAll(newMovies);
+    wavveMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -187,13 +183,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.amazon.watchProvider);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !amazonMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !amazonMovieList.contains(newMovie));
 
-    amazonMovieList.addAll(filteredNewMovies);
+    amazonMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
@@ -202,13 +198,13 @@ class OttViewModel extends ChangeNotifier {
     // _isLoading = true; // 로딩 시작
     // notifyListeners();
     _page++;
-    List<MovieItem> newMovies =
+    List<MovieItem> newMovieList =
         await _repository.getOttMovieItems(page: _page, watchProvider: WatchProviderEnums.apple.watchProvider);
 
     // 중복된 아이템 필터링
-    List<MovieItem> filteredNewMovies = newMovies.where((newMovie) => !appleMovieList.contains(newMovie)).toList();
+    newMovieList.retainWhere((newMovie) => !appleMovieList.contains(newMovie));
 
-    appleMovieList.addAll(filteredNewMovies);
+    appleMovieList.addAll(newMovieList);
     // _isLoading = false; // 로딩 완료
     notifyListeners();
   }
