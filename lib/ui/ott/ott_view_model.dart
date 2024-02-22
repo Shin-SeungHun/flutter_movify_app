@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_movify/common/utils/enum/genre_enums.dart';
 import 'package:flutter_movify/common/utils/enum/watch_provider_enums.dart';
 import 'package:flutter_movify/data/model/movie_item.dart';
 import 'package:flutter_movify/data/repository/movie_repository_impl.dart';
