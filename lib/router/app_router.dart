@@ -155,31 +155,3 @@ class AppRouter {
     );
   }
 }
-
-// final router = GoRouter(initialLocation: '/', routes: [
-//   GoRoute(
-//       path: '/',
-//       builder: (context, state) {
-//         return ChangeNotifierProvider<HomeViewModel>(
-//           create: (context) => HomeViewModel(),
-//           child: const HomeScreen(),
-//         );
-//       }),
-//   GoRoute(
-//       path: '/movieInfo',
-//       builder: (context, state) {
-//         final MovieItem movieItem = state.extra as MovieItem;
-//         return ChangeNotifierProvider<MovieInfoViewModel>(
-//           create: (context) => MovieInfoViewModel(movieItem: movieItem),
-//           child: const MovieInfoScreen(),
-//         );
-//       }),
-//   GoRoute(
-//       path: '/search',
-//       builder: (context, state) {
-//         return ChangeNotifierProvider<SearchViewModel>(
-//           create: (context) => SearchViewModel(),
-//           child: const SearchScreen(),
-//         );
-//       }),
-// ]);
