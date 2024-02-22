@@ -34,4 +34,12 @@ class MovieApi {
         'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&language=ko-KR&page=$page&sort_by=popularity.desc&watch_region=KR&with_watch_providers=$watchProvider'));
     return MovieDto.fromJson(jsonDecode(response.body));
   }
+
+  getGenreMovieInfoResult({required int page, required int genre}) async {
+    final response = await http.get(Uri.parse(
+        'https://api.themoviedb.org/3/discover/movie?api_key=$_apiKey&language=ko-KR&page=$page&region=KR&sort_by=popularity.desc&with_genres=$genre'));
+    return MovieDto.fromJson(jsonDecode(response.body));
+  }
+
+
 }
