@@ -17,6 +17,8 @@ extension MovieEnumsExtension on MovieEnums {
         return 'upcoming';
       case MovieEnums.nowPlaying:
         return 'now_playing';
+      default:
+        return '';
     }
   }
 

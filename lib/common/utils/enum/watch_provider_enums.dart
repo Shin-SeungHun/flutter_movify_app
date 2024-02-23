@@ -22,6 +22,8 @@ extension WatchProviderEnumsExtension on WatchProviderEnums {
         return 119;
       case WatchProviderEnums.apple:
         return 350;
+      default:
+        return 0;
     }
   }
 }
